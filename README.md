@@ -58,4 +58,20 @@ GM12878|H4k20me1Std|H4k20me1Std.bam|Control.bam
 <img width="1351" alt="Снимок экрана 2022-03-31 в 23 48 44" src="https://user-images.githubusercontent.com/93148512/161146802-d21444db-d390-49a5-a542-199079326d03.png">
 
 # Бонус
-
+# Код для добавления названий в .bed файле
+```python
+import pandas as pd
+df = pd.read_csv('GM12878_10_dense.bed', encoding='utf-8', sep='\t', comment='t', header=None)
+header = ['chrom', 'chromStart', 'chromEnd', 'state', 'zero', 'dot', 'chromStart', 'chromEnd', 'rgb']
+df.columns = header[:len(df.columns)]
+df.loc[df.state == 1, 'state'] = '1_Weak transcribed'
+df.loc[df.state == 2, 'state'] = '2_Weak transcribed'
+df.loc[df.state == 3, 'state'] = '3_Promoter'
+df.loc[df.state == 4, 'state'] = '4_Promoter'
+df.loc[df.state == 5, 'state'] = '5_Enhancer'
+df.loc[df.state == 6, 'state'] = '6_Transcribed_region'
+df.loc[df.state == 7, 'state'] = '7_Enhancer'
+df.loc[df.state == 8, 'state'] = '8_Heterochromatin'
+df.loc[df.state == 9, 'state'] = '9_Enhancer'
+df.loc[df.state == 10, 'state'] = '10_Enhancer'
+df.to_csv('GM12878_10_bonus_dense.bed', sep='\t', index=False, header=None)
